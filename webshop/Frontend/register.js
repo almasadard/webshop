@@ -49,7 +49,6 @@ function handleRegistration(event) {
     const plz = formData.get("plz");
     const ort = formData.get("ort");
 
-
     // Validierung der Felder: Überprüfen, ob die Eingaben leer sind
     let formIsValid = true;
 
@@ -120,16 +119,57 @@ function handleRegistration(event) {
         hideFieldError("ortInput", "ortHelpText");
     }
 
-
     if (!formIsValid) {
         return; // Formular wird nicht abgesendet
     }
 
-    // Testen mit AJAX Request
+    // Create user object from form data
+    const user = {
+        email: email,
+        password: password,
+        benutzername: benutzername,
+        vorname: vorname,
+        nachname: nachname,
+        strasse: strasse,
+        plz: plz,
+        ort: ort
+    };
 
-    alert("Registrierung erfolgreich!");
+    // Send user creation request
+    $.ajax({
+        url: 'http://localhost:8080/users/createUser',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: { "Authorization": sessionStorage.getItem("token") },
+        data: JSON.stringify(user),
+        success: function(response) {
+            console.log('Daten erfolgreich gesendet:', response);
 
-    // Neues Formular nach erfolgreicher Registrierung
+            // Login request
+            $.post({
+                url: "http://localhost:8080/login",
+                contentType: "application/json",
+                headers: { "Authorization": sessionStorage.getItem("token") },
+                data: JSON.stringify(user),
+                success: function(data) {
+                    let timestamp = new Date().toISOString();
+                    sessionStorage.setItem("token", data);
+                    sessionStorage.setItem("loginTimestamp", timestamp);
+                    location.href = "index.html";
+                    console.log("Eingeloggt");
+                },
+                error: console.error
+            });
+
+            alert("Sie haben sich erfolgreich registriert!");
+        },
+        error: function(xhr, status, error) {
+            console.error('Fehler beim Senden der Daten:', error);
+            // Handle error appropriately
+        }
+    });
+
+    // Clear form after successful registration
     form.reset();
 }
 
@@ -151,7 +191,6 @@ function hideFieldError(inputId, helpTextId) {
     inputField.classList.remove("is-invalid");
     helpText.style.display = "none";
 }
-
 
 // Attach the form submission event listener
 document.addEventListener("DOMContentLoaded", function () {
