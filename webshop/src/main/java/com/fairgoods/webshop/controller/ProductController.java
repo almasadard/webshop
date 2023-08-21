@@ -1,6 +1,6 @@
 package com.fairgoods.webshop.controller;
 
-import com.fairgoods.webshop.model.Product;
+import com.fairgoods.webshop.dto.ProductDTO;
 import com.fairgoods.webshop.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +21,12 @@ public class ProductController {
     // Read Product(s)
 
     @GetMapping
-    public ResponseEntity<List<Product>> getProducts() {
+    public ResponseEntity<List<ProductDTO>> getProducts() {
         return ResponseEntity.ok(productService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         return productService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -35,15 +35,15 @@ public class ProductController {
     // Create Product
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product product){
-        return ResponseEntity.ok(productService.save(product));
+    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO){
+        return ResponseEntity.ok(productService.save(productDTO));
     }
 
     // Update Product
 
     @PutMapping
-    public ResponseEntity<Product> updateProduct (@Valid @RequestBody Product product){
-        return ResponseEntity.ok(productService.update(product));
+    public ResponseEntity<ProductDTO> updateProduct (@Valid @RequestBody ProductDTO productDTO  ){
+        return ResponseEntity.ok(productService.update(productDTO));
     }
 
     // Delete Product
