@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Athiti&display=swap" rel="stylesheet">  <title>FairGoods</title>
+
+    <!-- Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v6.2.0/js/all.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+            crossorigin="anonymous"></script>
+    <script src="/Frontend/navbar/navbar.js" defer> </script>
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+            crossorigin="anonymous"></script>
+    <script src="/Frontend/footer/footer.js" defer> </script>
+
+</head>
+
+<body>
+
+<section id="title">
+    <div id="navbarContainer"> </div>
+    <div class="container"> </div>
+</section>
+
+<!-- Hilfe -->
+<section id="questions" class="p-5">
+    <div class="container">
+        <h2 class="text-center mb-4"> Häufig gestellte Fragen
+        </h2>
+
+        <div class="accordion accordion-flush" id="accordionFlushExample">
+            <!--Objekt 1-->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne">
+                        Wie lange braucht es bis meine Bestellung geliefert wird?
+                    </button>
+                </h2>
+                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"> Die Dauer der Lieferzeit ist natürlich von der Lieferadresse abhängig. Grundsätzlich lässt sich aber sagen, dass unsere Ware in 3-5 Werktagen geliefert wird.
+                    </div>
+                </div>
+            </div>
+            <!--Objekt 2-->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo">
+                        Sind all eure Produkte aus Österreich?
+                    </button>
+                </h2>
+                <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"> All unsere Produkte sind zu 100% regional aus Österreich.
+                    </div>
+                </div>
+            </div>
+            <!--Objekt 3-->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree">
+                        Wie kann ich einen Account erstellen?
+                    </button>
+                </h2>
+                <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"> Über die Navigationsleiste kannst du die Registerkarte "Registrierung" anklicken, dort bitten wir dich ein paar kurze Daten von dir anzugeben und *klick* schon bist du Mitglied bei FairGoods.
+                    </div>
+                </div>
+            </div>
+
+            <!--Objekt 4-->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour">
+                        Wie kann ich mich bei FairGoods einloggen?
+                    </button>
+                </h2>
+                <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"> Falls du bereits einen Account bei uns besitzt, kannst du dich ganz einfach über die Navigationsleiste unter "Login" mit deiner E-Mail Adresse und deinem Passwort einloggen.
+                    </div>
+                </div>
+            </div>
+
+            <!--Objekt 5-->
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFive">
+                        Wie finde ich eure Kontaktdaten?
+                    </button>
+                </h2>
+                <div id="flush-collapseFive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"> Über die Registerkarte "Impressum" kommst du zu unseren Kontaktdaten.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Kontakt-->
+<section id="Kontakt" class="p-5">
+    <div class="container">
+        <h2 class="text-center text-black"> Kontakt </h2>
+        <p class="lead text-center text-white mb-5">
+        </p>
+        <!--Servicenummer-->
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card ">
+                    <div class="card-body text-center">
+                        <h3 class="card-title mb-3"> Unsere Servicenummer:</h3>
+                        <p class="card-text">+43/887 993 55</p>
+                    </div>
+                </div>
+            </div>
+            <!--E-Mail-->
+            <div class="col-lg-6">
+                <div class="card ">
+                    <div class="card-body text-center">
+                        <h3 class="card-title mb-3"> Per Mail erreichbar unter:</h3>
+                        <p class="card-text">fairgoods@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<div id="footerContainer"> </div>
+
+</body>
+
+</html>
