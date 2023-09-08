@@ -13,3 +13,6 @@ spring:
         format_sql: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL5Dialect
+security:
+  jwt:
+    secret-key: verysecretkeythatshouldbeverydifficult
