@@ -15,6 +15,10 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -55,6 +59,7 @@ public class UserService {
     public UserDTO toDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
+        userDTO.setRole(user.getRole());
         userDTO.setTitle(user.getTitle());
         userDTO.setFirstname(user.getFirstname());
         userDTO.setLastname(user.getLastname());
@@ -69,6 +74,7 @@ public class UserService {
     public User toEntity(UserDTO userDTO) {
         User user = new User();
         user.setId(userDTO.getId());
+        user.setRole(userDTO.getRole());
         user.setTitle(userDTO.getTitle());
         user.setFirstname(userDTO.getFirstname());
         user.setLastname(userDTO.getLastname());
