@@ -1,3 +1,5 @@
+package com.fairgoods.webshop.controllerTest;
+
 import com.fairgoods.webshop.dto.ProductDTO;
 import com.fairgoods.webshop.controller.ProductController;
 import com.fairgoods.webshop.service.ProductService;

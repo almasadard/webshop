@@ -54,11 +54,11 @@ public class ProductService {
         productRepository.delete(product);
     }
 
-    private ProductDTO toDTO(Product product) {
+    public ProductDTO toDTO(Product product) {
         return new ProductDTO(product.getId(), product.getProductname(), product.getDescription(), product.getPrice(), product.getQuantity());
     }
 
-    private Product toEntity(ProductDTO productDTO) {
+    public Product toEntity(ProductDTO productDTO) {
         return new Product(productDTO.getId(), productDTO.getProductname(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity());
     }
 
