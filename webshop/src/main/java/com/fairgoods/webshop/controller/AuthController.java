@@ -2,18 +2,30 @@ package com.fairgoods.webshop.controller;
 
 import com.fairgoods.webshop.dto.LoginRequest;
 import com.fairgoods.webshop.dto.LoginResponse;
-import com.fairgoods.webshop.security.JwtIssuer;
-import com.fairgoods.webshop.security.UserPrincipal;
+import com.fairgoods.webshop.service.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
+@RestController
+@RequestMapping("/auth")
+@RequiredArgsConstructor
+public class AuthController {
+
+    private final AuthService authService;
+
+    @PostMapping("/user")
+    public LoginResponse login(@RequestBody LoginRequest request) {
+        System.out.println("email: " + request.getEmail() + " pw: " + request.getPassword());
+        return authService.attemptLogin(request.getEmail(), request.getPassword());
+    }
+}
+
+/*
 
 @RestController
 @RequiredArgsConstructor
@@ -42,4 +54,4 @@ public class AuthController {
 
     }
 
-}
+}*/

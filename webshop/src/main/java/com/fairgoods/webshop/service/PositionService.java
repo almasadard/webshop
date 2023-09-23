@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.service;
 
 import com.fairgoods.webshop.model.Cart;
@@ -49,3 +50,4 @@ public class PositionService {
         return positionRepository.save(position);
     }
 }
+*/
