@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.service;
 
 import com.fairgoods.webshop.dto.ProductDTO;
@@ -49,4 +50,4 @@ public class PositionService {
 
         return positionRepository.save(position);
     }
-}
+}*/

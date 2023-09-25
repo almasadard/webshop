@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -31,4 +32,4 @@ public class Position {
         this.id = id;
         this.quantity = quantity;
     }
-}
+}*/

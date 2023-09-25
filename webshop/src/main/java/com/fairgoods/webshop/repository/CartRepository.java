@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.repository;
 
 import com.fairgoods.webshop.model.Cart;
@@ -9,3 +10,4 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
 
     Cart findByUserId(Long userId);
 }
+*/

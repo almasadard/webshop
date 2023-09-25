@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.service;
 
 import com.fairgoods.webshop.model.Cart;
@@ -18,4 +19,4 @@ public class CartService {
     public Cart findByUserId(Long userId) {
         return cartRepository.findByUserId(userId);
     }
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.controller;
 
 import com.fairgoods.webshop.dto.PositionDTO;
@@ -25,4 +26,4 @@ public class PositionController {
     private static Position fromDTO(PositionDTO positionDTO) {
         return new Position(positionDTO.getId(), positionDTO.getQuantity());
     }
-}
+}*/
