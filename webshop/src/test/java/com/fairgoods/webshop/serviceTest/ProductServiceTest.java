@@ -53,7 +53,7 @@ public class ProductServiceTest {
         assertEquals("Product A", result.get().getProductname());
     }
 
-    // Fügen Sie hier weitere Testfälle für die anderen Methoden des ProductService hinzu.
+
 }
 
 

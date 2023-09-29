@@ -67,5 +67,5 @@ public class UserServiceTest {
         assertThrows(EntityNotFoundException.class, () -> userService.findById(1L));
     }
 
-    // Fügen Sie hier weitere Testfälle für die anderen Methoden des UserService hinzu.
+
 }

@@ -57,5 +57,5 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$[1].productname").value("Product B"));
     }
 
-    // Fügen Sie hier weitere Testfälle für die anderen Methoden des ProductController hinzu.
+
 }

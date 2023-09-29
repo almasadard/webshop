@@ -25,7 +25,7 @@ public class UserControllerTest {
 
     @Test
     public void testFindUserById() throws Exception {
-        // Erstellen Sie ein Mock-UserDTO für den Test
+        // Mock-UserDTO für den Test
         UserDTO mockUser = new UserDTO();
         mockUser.setId(1L);
         mockUser.setFirstname("John");
