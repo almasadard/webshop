@@ -1,0 +1,132 @@
+/* General */
+#title, .bg-warenkorb {
+    background-color:#a07855;
+}
+
+html,body {
+    font-family: 'Athiti', sans-serif;
+}
+
+.navbar-brand {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.nav-item {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+
+}
+
+.nav-link:hover{
+    background-color: tan;
+}
+
+.titletext, .titletexttwo {
+    color: black;
+    text-align: center;
+    font-weight: bold;
+}
+
+.container-fluid{
+    padding:3% 15%;
+}
+
+h1{
+    font-size: 3rem;
+    line-height: 1.5;
+}
+
+#sortiment {
+    padding: 2% 15%;
+
+}
+
+.sortiment-box{
+    text-align: center;
+}
+
+.w-100 {
+    border-radius: 30px;
+}
+
+#kaffee, #spices {
+    background-color: #a07855;
+    padding: 3% 15%;
+    text-align: center;
+}
+
+.categorylink {
+    color: black;
+    text-decoration: none;
+}
+
+.categorylink:hover, .categorylink:visited, .regLink, .link:hover, .link:visited {
+    color: black;
+}
+
+#tee {
+    padding: 3% 15%;
+    text-align: center;
+}
+
+.preis {
+    float: right;
+}
+
+.footer{
+    display: block;
+}
+
+.link {
+    color: black;
+    text-decoration: none;
+}
+
+#footer {
+    padding: 1%;
+    text-align: center;
+}
+
+.register h2{
+    text-align: center;
+}
+.register{
+    margin-top: 10%;
+    margin-left: 8%;
+}
+
+/* Mobile First */
+
+@media screen and (min-width: 350px) {
+
+}
+
+/* Tablet Style */
+
+@media screen and (min-width: 700px) {
+
+}
+/* Desktop Style */
+
+@media screen and (min-width: 1100px) {
+
+}
+
+/* Stil für Fehlermeldung */
+.is-invalid {
+    border: 2px solid red;
+}
+
+/* Stil für Hilfetext */
+.help-text {
+    color: red;
+    font-size: 12px;
+    display: none;
+}
+
+/* Stil für versteckte Elemente */
+.hidden {
+    display: none;
+}

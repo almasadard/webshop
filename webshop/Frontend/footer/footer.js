@@ -1,0 +1,1 @@
+$("#footerContainer").load("/Frontend/footer/footer.html");
