@@ -20,7 +20,7 @@ public class AuthController {
     public String login(@RequestBody LoginRequest request) {
         System.out.println("email: " + request.getEmail() + " pw: " + request.getPassword());
 
-        return "Bearer " + authService.attemptLogin(request.getEmail(), request.getPassword());
+        return "Bearer " + authService.attemptLogin(request);
 
     }
 }

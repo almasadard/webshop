@@ -2,12 +2,11 @@ package com.fairgoods.webshop.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-@Builder
+@Data
 public class LoginRequest {
     @NotBlank
     private String email;
