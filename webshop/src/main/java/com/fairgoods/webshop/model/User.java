@@ -20,9 +20,6 @@ public class User {
     @Column(name="id")
     private Long id;
 
-    @Column(name="role")
-    private String role;
-
     @Column(name="title")
     private String title;
 
