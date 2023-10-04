@@ -20,8 +20,8 @@ public class User {
     @Column(name="id")
     private Long id;
 
-    @Column(name="role")
-    private String role;
+    @Column(name="admin")
+    private boolean admin;
 
     @Column(name="title")
     private String title;

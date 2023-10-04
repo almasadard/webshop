@@ -45,7 +45,7 @@ public class JwtIssuer {
         return Jwts.builder()
                 .claim("id", user.getId())
                 .claim("sub", user.getEmail())
-                //.claim("admin", user.isAdmin())
+                .claim("admin", user.isAdmin())
                 .setExpiration(expirationDate)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

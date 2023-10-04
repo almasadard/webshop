@@ -64,7 +64,7 @@ public class UserService {
     public UserDTO toDTO(User user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
-        userDTO.setRole(user.getRole());
+        userDTO.setAdmin(user.isAdmin());
         userDTO.setTitle(user.getTitle());
         userDTO.setFirstname(user.getFirstname());
         userDTO.setLastname(user.getLastname());
@@ -79,7 +79,7 @@ public class UserService {
     public User toEntity(UserDTO userDTO) {
         User user = new User();
         user.setId(userDTO.getId());
-        user.setRole(userDTO.getRole());
+        user.setAdmin(userDTO.isAdmin());
         user.setTitle(userDTO.getTitle());
         user.setFirstname(userDTO.getFirstname());
         user.setLastname(userDTO.getLastname());
