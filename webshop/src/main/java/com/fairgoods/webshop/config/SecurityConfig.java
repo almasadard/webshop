@@ -13,7 +13,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.fairgoods.webshop.security.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
