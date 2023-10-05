@@ -5,6 +5,7 @@ import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,12 +16,20 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
+    public Optional<User> findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    public Optional<UserDTO> findById(Long id){
-        return userRepository.findById(id).map(this::toDTO);
+    public User findById(Long id){
+        var findUserId = userRepository.findById(id);
+        if(findUserId.isEmpty()){
+            throw new ObjectNotFoundException(findUserId, "User nicht gefunden");
+        }
+        return findUserId.get();
     }
 
     public UserDTO save (UserDTO userDTO){

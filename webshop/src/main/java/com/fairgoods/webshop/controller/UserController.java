@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
@@ -23,8 +24,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public Optional<UserDTO> findUserById(@PathVariable Long id) {
-        return service.findById(id);
+    public UserDTO findUserById(@PathVariable Long id) {
+        return service.toDTO(service.findById(id));
     }
 
     @PostMapping

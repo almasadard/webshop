@@ -4,11 +4,15 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
 @NoArgsConstructor
+@Getter
+@Setter
 public class User {
     @Positive
     @Id
@@ -16,13 +20,15 @@ public class User {
     @Column(name="id")
     private Long id;
 
+    @Column(name="admin")
+    private boolean admin;
+
     @Column(name="title")
     private String title;
-    @NotBlank
+
     @Column(name="firstname")
     private String firstname;
 
-    @NotBlank
     @Column(name="lastname")
     private String lastname;
 
