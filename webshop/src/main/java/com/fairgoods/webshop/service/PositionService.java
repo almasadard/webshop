@@ -1,6 +1,7 @@
 /*
 package com.fairgoods.webshop.service;
 
+import com.fairgoods.webshop.dto.ProductDTO;
 import com.fairgoods.webshop.model.Cart;
 import com.fairgoods.webshop.model.Position;
 import com.fairgoods.webshop.model.Product;
@@ -38,16 +39,16 @@ public class PositionService {
             }
         }
 
-        Optional<Product> product = productService.findById(productId);
+        Optional<ProductDTO> product = productService.findById(productId);
 
         if (product.isEmpty()) {
             throw new RuntimeException("Product does not exist");
         }
 
         position.setCart(cart);
-        position.setProduct(product.get());
+        position.setProduct(productService.toEntity(product.get()));
 
         return positionRepository.save(position);
-    }
-}
+
 */
+

@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.dto;
 
 import jakarta.validation.constraints.NotNull;
@@ -17,4 +18,4 @@ public class PositionDTO {
     @NotNull
     @Positive
     private Integer quantity;
-}
+}*/

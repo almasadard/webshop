@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.controller;
 
 import com.fairgoods.webshop.model.Cart;
@@ -18,4 +19,4 @@ public class CartController {
     public Cart create(@RequestBody Cart cart) {
         return cartService.save(cart);
     }
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -28,4 +29,4 @@ public class Cart {
     public Cart(User user) {
         this.user = user;
     }
-}
+}*/
