@@ -2,6 +2,7 @@ package com.fairgoods.webshop.controllerTest;
 
 import com.fairgoods.webshop.controller.UserController;
 import com.fairgoods.webshop.dto.UserDTO;
+import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,12 @@ public class UserControllerTest {
     @Test
     public void testFindUserById() throws Exception {
         // Mock-UserDTO für den Test
-        UserDTO mockUser = new UserDTO();
+        User mockUser = new User();
         mockUser.setId(1L);
         mockUser.setFirstname("John");
 
         // Mocken des Service, um die findById-Methode zu überschreiben
-        when(userService.findById(1L)).thenReturn(Optional.of(mockUser));
+        when(userService.findById(1L)).thenReturn(mockUser);
 
         // Durchführung des MockMvc-Tests
         mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}", 1L))

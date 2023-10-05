@@ -5,6 +5,7 @@ import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.repository.UserRepository;
 import com.fairgoods.webshop.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -50,13 +51,16 @@ public class UserServiceTest {
     public void testFindUserById() {
         // Mocking des UserRepository, um die findById-Methode zu überschreiben
         User user = new User(1L, "John");
+        UserDTO userDto = new UserDTO();
+        userDto.setId(1L);
+        userDto.setFirstname("John");
+        userService.save(userDto);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        Optional<UserDTO> result = userService.findById(1L);
+        User result = userService.findById(1L);
 
-        assertTrue(result.isPresent());
-        assertEquals("John", result.get().getFirstname());
+        assertEquals("John", result.getFirstname());
     }
 
     @Test
@@ -64,7 +68,7 @@ public class UserServiceTest {
         // Mocking des UserRepository, um die findById-Methode zu überschreiben
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> userService.findById(1L));
+        assertThrows(ObjectNotFoundException.class, () -> userService.findById(1L));
     }
 
 
