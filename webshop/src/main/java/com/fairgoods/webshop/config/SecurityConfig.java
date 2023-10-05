@@ -29,8 +29,12 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                //Admin
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.DELETE, "/product/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/product").hasRole("ADMIN")
+                //Role
                 .requestMatchers("/login", "/user/**", "/product", "/user").permitAll()
                 .anyRequest().authenticated()
                 .and()

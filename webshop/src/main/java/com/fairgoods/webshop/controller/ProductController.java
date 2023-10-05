@@ -35,14 +35,17 @@ public class ProductController {
 
     // Create Product
 
+
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody ProductDTO productDTO){
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
         return ResponseEntity.ok(productService.save(productDTO));
     }
 
     // Update Product
 
     @PutMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ProductDTO> updateProduct (@Valid @RequestBody ProductDTO productDTO  ){
         return ResponseEntity.ok(productService.update(productDTO));
     }
