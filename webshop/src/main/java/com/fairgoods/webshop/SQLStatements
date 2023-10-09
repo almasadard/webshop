@@ -1,0 +1,13 @@
+//Kaffee
+
+INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`) VALUES ('1', 'Der klassische Kaffee mit feinsten Bohnen.', '6', 'Origin', '4'), ('2', 'Der außergewöhnliche Kaffee mit feinsten Bohnen.', '10', 'Selection', '3'),('3', 'Der entkoffeinierte Kaffee mit feinsten Bohnen.', '6', 'Without', '4'), ('4', 'Der luxuriöse Kaffee mit feinsten Bohnen.', '10', 'Luxus', '3');
+
+//Tee
+INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`) VALUES ('5', 'Feinster schwarzer Teegenuss', '6', 'Black', '4'), ('6', 'Feinster grüner Teegenuss', '10', 'Green', '3'),('7', 'Feinster herbal Teegenuss', '6', 'Relax', '4'), ('8', 'Feinster vitamin Teegenuss', '10', 'Fit', '3');
+
+//Kräuter
+INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`) VALUES ('9', 'Ausgewählte, feinste Kräuter', '6', 'Yellow', '4'), ('10', 'Ausgewählte, feinste Kräuter', '10', 'Red', '3'),('11', 'Ausgewählte, feinste Kräuter', '6', 'Green', '4'), ('12', 'Ausgewählte, feinste Kräuter', '10', 'Black', '3');
+
+//User
+
+INSERT INTO `user` (`id`, `admin`, `city`, `email`, `firstname`, `lastname`, `password`, `postcode`, `streetname`, `title`) VALUES ('3', b'0', 'Wien', 'userdaddy@mail.com', 'Dietmar', 'Daddy', '*geheim1', '1100', 'Daddystreet 1', 'Mann');
