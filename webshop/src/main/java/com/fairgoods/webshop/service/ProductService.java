@@ -1,7 +1,9 @@
 package com.fairgoods.webshop.service;
 
 import com.fairgoods.webshop.dto.ProductDTO;
+import com.fairgoods.webshop.model.Category;
 import com.fairgoods.webshop.model.Product;
+import com.fairgoods.webshop.repository.CategoryRepository;
 import com.fairgoods.webshop.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
 
 
     public List<ProductDTO> findAll(){
@@ -54,12 +57,17 @@ public class ProductService {
         productRepository.delete(product);
     }
 
+
     public ProductDTO toDTO(Product product) {
-        return new ProductDTO(product.getId(), product.getProductname(), product.getDescription(), product.getPrice(), product.getQuantity());
+        return new ProductDTO(product.getId(), product.getProductname(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().getName());
     }
 
     public Product toEntity(ProductDTO productDTO) {
-        return new Product(productDTO.getId(), productDTO.getProductname(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity());
+        Category category = categoryRepository.findByName(productDTO.getCategoryName());
+        if (category == null) {
+            throw new IllegalArgumentException("No category found with name: " + productDTO.getCategoryName());
+        }
+        return new Product(productDTO.getId(), productDTO.getProductname(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), category);
     }
 
 }

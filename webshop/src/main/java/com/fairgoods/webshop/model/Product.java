@@ -36,4 +36,8 @@ public class Product {
     @NotNull
     @Column (name = "quantity")
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
 }
