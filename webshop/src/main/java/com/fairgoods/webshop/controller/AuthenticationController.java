@@ -22,12 +22,6 @@ public class AuthenticationController {
         return ResponseEntity.ok(addBearerPrefix(token));
     }
 
-/*    @PostMapping("/login/admin")
-    public ResponseEntity<String> adminLogin(@RequestBody LoginDTO loginDTO) {
-        String token = authenticationService.login(loginDTO.getEmail(), loginDTO.getPassword(), true);
-        return ResponseEntity.ok(addBearerPrefix(token));
-    }*/
-
     @GetMapping("/isAdmin")
     @PreAuthorize("hasRole('ADMIN')")
     public boolean isAdmin() {
