@@ -6,9 +6,7 @@ import java.util.Optional;
 
 import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.security.UserPrincipal;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,14 +43,28 @@ public class TokenService {
                     .setSigningKey(secretkey.getBytes())
                     .build()
                     .parseClaimsJws(jwt);
+
+            Long userId = jwsClaims.getBody().get("id", Long.class);
+            String sub = jwsClaims.getBody().get("sub", String.class);
+            boolean admin = jwsClaims.getBody().get("admin", Boolean.class);
+
+            return Optional.of(new UserPrincipal(userId, sub, admin));
+
         } catch (SignatureException e) {
+            // Ungültige Signatur
+            return Optional.empty();
+        } catch (ExpiredJwtException e) {
+            // Token ist abgelaufen
+            return Optional.empty();
+        } catch (MalformedJwtException e) {
+            // Token-Format ist nicht korrekt
+            return Optional.empty();
+        } catch (UnsupportedJwtException e) {
+            // Token hat eine unbekannte Struktur
+            return Optional.empty();
+        } catch (IllegalArgumentException e) {
+            // Claims sind leer oder illegal
             return Optional.empty();
         }
-
-        Long userId = jwsClaims.getBody().get("id", Long.class);
-        String sub = jwsClaims.getBody().getSubject();
-        boolean admin = jwsClaims.getBody().get("admin", Boolean.class);
-
-        return Optional.of(new UserPrincipal(userId, sub, admin));
     }
 }

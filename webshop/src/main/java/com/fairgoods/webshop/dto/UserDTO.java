@@ -13,4 +13,5 @@ public class UserDTO {
     private String city;
     private String email;
     private String password;
+    private boolean admin;
 }
