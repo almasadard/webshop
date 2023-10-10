@@ -1,7 +1,6 @@
 package com.fairgoods.webshop.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.Getter;
@@ -52,10 +51,9 @@ public class User {
     }
 
 
+    //Password BCrypt Handling
     public void setPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = passwordEncoder.encode(password);
-
-        //System.out.println("Password: " + this.password);
     }
 }

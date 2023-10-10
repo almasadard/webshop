@@ -12,6 +12,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import com.fairgoods.webshop.security.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @Configuration
 @EnableWebSecurity
@@ -20,6 +22,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final TokenService tokenService;
+
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -33,8 +40,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/product/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/product").hasRole("ADMIN")
-                //Role
-                .requestMatchers("/login", "/login/**","/user", "/user/**", "/product").permitAll()
+                //User
+                .requestMatchers("/login", "/login/**","/user", "/user/**", "/product/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationFilter(tokenService),
