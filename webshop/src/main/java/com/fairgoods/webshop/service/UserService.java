@@ -72,6 +72,7 @@ public class UserService {
         userDTO.setCity(user.getCity());
         userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
+        userDTO.setAdmin(user.isAdmin());
         return userDTO;
     }
 
@@ -86,6 +87,7 @@ public class UserService {
         user.setCity(userDTO.getCity());
         user.setEmail(userDTO.getEmail());
         user.setPassword(userDTO.getPassword());
+        user.setAdmin(userDTO.isAdmin());
         return user;
     }
 }
