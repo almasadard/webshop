@@ -22,7 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     private final TokenService tokenService;
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/product").hasRole("ADMIN")
                 //Role
-                .requestMatchers("/login", "/login/**","/user", "/user/**", "/product/**").permitAll()
+                .requestMatchers("/login", "/login/**","/user", "/user/**", "/product/**", "/files/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationFilter(tokenService),
