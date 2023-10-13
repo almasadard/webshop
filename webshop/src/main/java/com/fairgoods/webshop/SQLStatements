@@ -1,12 +1,12 @@
 //Kaffee
 
-INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`,`category_id`) VALUES ('1', 'Der klassische Kaffee mit feinsten Bohnen.', '6', 'Origin', '4'), ('2', 'Der außergewöhnliche Kaffee mit feinsten Bohnen.', '10', 'Selection', '3'),('3', 'Der entkoffeinierte Kaffee mit feinsten Bohnen.', '6', 'Without', '4'), ('4', 'Der luxuriöse Kaffee mit feinsten Bohnen.', '10', 'Luxus', '3', '1');
+INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`,`category_id`) VALUES ('1', 'Der klassische Kaffee mit feinsten Bohnen.', '6', 'Origin', '4','1'), ('2', 'Der außergewöhnliche Kaffee mit feinsten Bohnen.', '10', 'Selection', '3','1'),('3', 'Der entkoffeinierte Kaffee mit feinsten Bohnen.', '6', 'Without', '4','1'), ('4', 'Der luxuriöse Kaffee mit feinsten Bohnen.', '10', 'Luxus', '3', '1');
 
 //Tee
-INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`, `category_id`) VALUES ('5', 'Feinster schwarzer Teegenuss', '6', 'Black', '4'), ('6', 'Feinster grüner Teegenuss', '10', 'Green', '3'),('7', 'Feinster herbal Teegenuss', '6', 'Relax', '4'), ('8', 'Feinster vitamin Teegenuss', '10', 'Fit', '3', '2');
+INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`, `category_id`) VALUES ('5', 'Feinster schwarzer Teegenuss', '6', 'Black', '4','2'), ('6', 'Feinster natürlicher grüner Teegenuss', '10', 'Green', '3','2'),('7', 'Feinster natürlicher herbal Teegenuss', '6', 'Relax', '4','2'), ('8', 'Feinster vitamin Teegenuss', '10', 'Fit', '3', '2');
 
 //Kräuter
-INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`, `category_id`) VALUES ('9', 'Ausgewählte, feinste Kräuter', '6', 'Yellow', '4'), ('10', 'Ausgewählte, feinste Kräuter', '10', 'Red', '3'),('11', 'Ausgewählte, feinste Kräuter', '6', 'Green', '4'), ('12', 'Ausgewählte, feinste Kräuter', '10', 'Black', '3', '3');
+INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`, `category_id`) VALUES ('9', 'Ausgewählte, feinste Kräuter', '6', 'Yellow', '4','3'), ('10', 'Ausgewählte, feinste Kräuter', '10', 'Red', '3','3'),('11', 'Ausgewählte, feinste Kräuter', '6', 'Green', '4','3'), ('12', 'Ausgewählte, feinste Kräuter', '10', 'Black', '3', '3');
 
 //User
 
