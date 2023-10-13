@@ -4,9 +4,9 @@ import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Optional;
 
@@ -16,7 +16,7 @@ public class AuthenticationService {
 
     private final TokenService tokenService;
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public String login(String email, String password, boolean requireAdmin) {
         Optional<User> userOptional = userRepository.findByEmail(email);
