@@ -1,3 +1,4 @@
+/*
 package com.fairgoods.webshop.model;
 
 import jakarta.persistence.Entity;
@@ -24,4 +25,4 @@ public class File {
     private String type;
     private String reference;
     private boolean assigned;
-}
+}*/

@@ -10,19 +10,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-@RestController
 @RequestMapping("/files")
+@RestController
 @RequiredArgsConstructor
 public class FileController {
 
     private final FileService fileService;
 
-    @PostMapping
-    public @ResponseBody FileUploadResponse upload(
-            @RequestParam("file") MultipartFile file
-    ) {
+    public @ResponseBody FileUploadResponse upload(@RequestParam("productFile") MultipartFile file) {
         String reference = fileService.upload(file);
-
         return new FileUploadResponse(
                 true, reference
         );

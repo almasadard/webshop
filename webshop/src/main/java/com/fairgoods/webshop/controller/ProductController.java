@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,9 +36,9 @@ public class ProductController {
 
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
-        return ResponseEntity.ok(productService.save(productDTO));
+   // @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ProductDTO> createProduct(@RequestParam("productFile") MultipartFile file, @Valid @RequestBody ProductDTO productDTO){
+        return ResponseEntity.ok(productService.save(productDTO, file));
     }
 
     // Update Product

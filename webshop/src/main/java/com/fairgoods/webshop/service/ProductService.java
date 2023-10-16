@@ -9,6 +9,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +20,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final LocalFileService localFileService;
 
 
     public List<ProductDTO> findAll(){
@@ -35,8 +37,13 @@ public class ProductService {
         return toDTO(findProductById.get());
     }
 
-    public ProductDTO save (ProductDTO productDTO){
+    public ProductDTO save (ProductDTO productDTO, MultipartFile file){
         Product product = toEntity(productDTO);
+
+        // Upload the image and save the filename in the product entity
+        String uploadedFilename = localFileService.upload(file);
+        product.setImageFilename(uploadedFilename);
+
         product = productRepository.save(product);
         return toDTO(product);
     }
@@ -62,7 +69,7 @@ public class ProductService {
 
 
     public ProductDTO toDTO(Product product) {
-        return new ProductDTO(product.getId(), product.getProductname(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().getName());
+        return new ProductDTO(product.getId(), product.getProductname(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getImageFilename(), product.getCategory().getName());
     }
 
     public Product toEntity(ProductDTO productDTO) {
@@ -70,7 +77,7 @@ public class ProductService {
         if (category == null) {
             throw new IllegalArgumentException("No category found with name: " + productDTO.getCategoryName());
         }
-        return new Product(productDTO.getId(), productDTO.getProductname(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), category);
+        return new Product(productDTO.getId(), productDTO.getProductname(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), productDTO.getImageFilename(), category);
     }
 
 }
