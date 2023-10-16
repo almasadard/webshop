@@ -25,11 +25,11 @@ public class UserService {
     }
 
     public User findById(Long id){
-        var findUserId = userRepository.findById(id);
-        if(findUserId.isEmpty()){
-            throw new ObjectNotFoundException(findUserId, "User nicht gefunden");
+        var findUserById = userRepository.findById(id);
+        if(findUserById.isEmpty()){
+            throw new ObjectNotFoundException(findUserById, "User nicht gefunden");
         }
-        return findUserId.get();
+        return findUserById.get();
     }
 
     public UserDTO save (UserDTO userDTO){

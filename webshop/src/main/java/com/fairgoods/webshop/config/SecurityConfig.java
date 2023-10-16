@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import com.fairgoods.webshop.security.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +32,10 @@ public class SecurityConfig {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .cors()
@@ -42,7 +48,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/product").hasRole("ADMIN")
                 //Role
-                .requestMatchers("/login", "/login/**","/user", "/user/**", "/product/**").permitAll()
+                .requestMatchers("/login", "/login/**","/user", "/user/**", "/product/**", "/files/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new AuthenticationFilter(tokenService),
