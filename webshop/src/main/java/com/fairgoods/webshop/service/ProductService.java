@@ -7,10 +7,10 @@ import com.fairgoods.webshop.repository.CategoryRepository;
 import com.fairgoods.webshop.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,9 +27,12 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<ProductDTO> findById(Long id){
-        return productRepository.findById(id)
-                .map(this::toDTO);
+    public ProductDTO findById(Long id){
+        var findProductById = productRepository.findById(id);
+        if (findProductById.isEmpty()) {
+            throw new ObjectNotFoundException(findProductById, "Produkt nicht gefunden");
+        }
+        return toDTO(findProductById.get());
     }
 
     public ProductDTO save (ProductDTO productDTO){
