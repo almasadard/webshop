@@ -1,5 +1,6 @@
 package com.fairgoods.webshop.dto;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class ProductDTO {
     private String description;
     private double price;
     private int quantity;
+    private String imageUrl;
     private String categoryName;
 }

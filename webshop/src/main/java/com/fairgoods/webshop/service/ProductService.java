@@ -62,7 +62,7 @@ public class ProductService {
 
 
     public ProductDTO toDTO(Product product) {
-        return new ProductDTO(product.getId(), product.getProductname(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getCategory().getName());
+        return new ProductDTO(product.getId(), product.getProductname(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getImageUrl(), product.getCategory().getName());
     }
 
     public Product toEntity(ProductDTO productDTO) {
@@ -70,7 +70,7 @@ public class ProductService {
         if (category == null) {
             throw new IllegalArgumentException("No category found with name: " + productDTO.getCategoryName());
         }
-        return new Product(productDTO.getId(), productDTO.getProductname(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), category);
+        return new Product(productDTO.getId(), productDTO.getProductname(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), productDTO.getImageUrl(), category);
     }
 
 }

@@ -45,7 +45,6 @@ public class FileController {
 
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(mediaType);
-            headers.setContentDispositionFormData("attachment", filename);
 
             return ResponseEntity.ok()
                     .headers(headers)
