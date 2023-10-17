@@ -28,6 +28,7 @@ public class FileController {
         );
     }
 
+
     @GetMapping("/{reference}")
     public @ResponseBody ResponseEntity<Resource> getFile(@PathVariable String reference) {
         Resource fileResource = fileService.get(reference);

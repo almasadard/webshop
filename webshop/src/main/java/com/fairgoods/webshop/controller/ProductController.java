@@ -1,12 +1,18 @@
 package com.fairgoods.webshop.controller;
 
 import com.fairgoods.webshop.dto.ProductDTO;
+import com.fairgoods.webshop.service.LocalFileService;
 import com.fairgoods.webshop.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -16,6 +22,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final LocalFileService localFileService;
 
     // CRUD
 
@@ -34,10 +41,11 @@ public class ProductController {
     // Create Product
 
 
-    @PostMapping
+    @PostMapping(consumes = {"multipart/form-data"})
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDTO){
-        return ResponseEntity.ok(productService.save(productDTO));
+    public ResponseEntity<ProductDTO> createProduct(@ModelAttribute ProductDTO productDTO,
+                                                    @RequestParam("file") MultipartFile file){
+        return ResponseEntity.ok(productService.save(productDTO, file));
     }
 
     // Update Product

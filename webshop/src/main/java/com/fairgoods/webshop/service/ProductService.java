@@ -9,8 +9,14 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +25,8 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final Path uploadDirectory = Paths.get("/Users/ramoni/Desktop/webshop/webshop/src/main/java/com/fairgoods/webshop/images");
+
 
 
     public List<ProductDTO> findAll(){
@@ -35,8 +43,26 @@ public class ProductService {
         return toDTO(findProductById.get());
     }
 
-    public ProductDTO save (ProductDTO productDTO){
+    public ProductDTO save (ProductDTO productDTO, MultipartFile file){
+
+        if (!Files.exists(uploadDirectory)) {
+            try {
+                Files.createDirectories(uploadDirectory);
+            } catch (IOException e) {
+                throw new RuntimeException("Error creating directory", e);
+            }
+        }
+        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        Path uploadPath = uploadDirectory.resolve(fileName);
+
+        try {
+            Files.copy(file.getInputStream(), uploadPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         Product product = toEntity(productDTO);
+        product.setImageUrl(fileName);
         product = productRepository.save(product);
         return toDTO(product);
     }
@@ -49,6 +75,7 @@ public class ProductService {
         product.setDescription(updatedProductDTO.getDescription());
         product.setProductname(updatedProductDTO.getProductname());
         product.setPrice(updatedProductDTO.getPrice());
+        product.setImageUrl(updatedProductDTO.getImageUrl());
         product.setQuantity(updatedProductDTO.getQuantity());
 
         return toDTO(productRepository.save(product));
