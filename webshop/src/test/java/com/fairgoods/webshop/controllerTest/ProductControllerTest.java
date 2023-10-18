@@ -118,7 +118,7 @@ public class ProductControllerTest {
     @Test
     void getProductByIdTest() throws Exception {
         final Product product = productRepository.findAll().stream()
-                .filter(p -> p.getId().equals(1L))
+                //.filter(p -> p.getId().equals(1L))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Product not found"));
         final Long productId = product.getId();
@@ -134,7 +134,7 @@ public class ProductControllerTest {
     @Test
     void deleteProductTest() throws Exception {
         final Product product = productRepository.findAll().stream()
-                .filter(p -> p.getId().equals(1L))
+                //.filter(p -> p.getId().equals(2L))
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Product not found"));
         final Long productId = product.getId();
