@@ -5,6 +5,7 @@ import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.repository.UserRepository;
 import com.fairgoods.webshop.service.TokenService;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -62,6 +65,11 @@ public class UserControllerTest {
         token = "Bearer " + tokenService.generateToken(user1);
     }
 
+    @AfterEach
+    void clean() {
+        userRepository.deleteAll();
+    }
+
     @Test
     public void getUsersTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/user").header("Authorization", token))
@@ -75,14 +83,24 @@ public class UserControllerTest {
 
     @Test
     public void getUserByIdTest() throws Exception {
+
+        // Find User und filtere den, den wir durch E-Mail wollen, und hole die ID
+        final User user = userRepository.findAll().stream()
+                .filter(u -> u.getEmail().equals("user1@test.com"))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+        final Long userId = user.getId();
+
         // Test mit gültiger Benutzer-ID und Email und Autorisierungstoken
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/1").header("Authorization", token))
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}", userId)
+                .header("Authorization", token))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("user1@test.com"));
+                // Prüft ob ID im JSON existiert und ob sie mit ID der Datenbank übereinstimmt
+                .andExpect(jsonPath("$.id", Matchers.is(userId.intValue())))
+                .andExpect(jsonPath("$.email", Matchers.is(user.getEmail())));
 
         // Test mit gültiger Benutzer-ID aber ohne Autorisierungstoken
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}", userId))
                 .andExpect(status().isForbidden());
     }
 }
