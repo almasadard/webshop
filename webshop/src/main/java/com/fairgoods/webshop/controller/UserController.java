@@ -36,7 +36,6 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-
     @PutMapping
     public UserDTO updateUser(@Valid @RequestBody UserDTO userDTO) {
         return service.update(userDTO);

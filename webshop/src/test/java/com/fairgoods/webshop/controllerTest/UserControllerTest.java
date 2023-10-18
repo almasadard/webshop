@@ -1,9 +1,12 @@
 package com.fairgoods.webshop.controllerTest;
 
 import com.fairgoods.webshop.WebshopApplication;
+import com.fairgoods.webshop.dto.UserDTO;
+import com.fairgoods.webshop.model.Product;
 import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.repository.UserRepository;
 import com.fairgoods.webshop.service.TokenService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -34,6 +38,9 @@ public class UserControllerTest {
     private TokenService tokenService;
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     private String token = "";
 
@@ -102,5 +109,73 @@ public class UserControllerTest {
         // Test mit gültiger Benutzer-ID aber ohne Autorisierungstoken
         mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}", userId))
                 .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void createUserTest() throws Exception {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstname("Test");
+        userDTO.setLastname("User");
+        userDTO.setEmail("testuser@test.com");
+        userDTO.setPassword("password");
+
+        String jsonRequest = objectMapper.writeValueAsString(userDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/user") // Stellen Sie sicher, dass der Pfad korrekt ist
+                        .content(jsonRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstname", Matchers.is(userDTO.getFirstname())))
+                .andExpect(jsonPath("$.lastname", Matchers.is(userDTO.getLastname())))
+                .andExpect(jsonPath("$.email", Matchers.is(userDTO.getEmail())));
+    }
+
+    @Test
+    void updateUserTest() throws Exception {
+        // Finden des zu aktualisierenden Benutzers
+        User userToUpdate = userRepository.findAll().stream()
+                .filter(u -> u.getEmail().equals("user1@test.com"))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+
+        // Erstellen des UserDTO mit aktualisierten Daten
+        UserDTO updatedUserDTO = new UserDTO();
+        updatedUserDTO.setId(userToUpdate.getId());
+        updatedUserDTO.setFirstname("UpdatedName");
+        updatedUserDTO.setLastname("UpdatedLastName");
+        updatedUserDTO.setEmail("updatedemail@test.com");
+        updatedUserDTO.setPassword("updatedPassword");
+
+        String jsonRequest = objectMapper.writeValueAsString(updatedUserDTO);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .put("/user")
+                        .content(jsonRequest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Authorization", token))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", Matchers.is(updatedUserDTO.getId().intValue())))
+                .andExpect(jsonPath("$.firstname", Matchers.is(updatedUserDTO.getFirstname())))
+                .andExpect(jsonPath("$.lastname", Matchers.is(updatedUserDTO.getLastname())))
+                .andExpect(jsonPath("$.email", Matchers.is(updatedUserDTO.getEmail())));
+
+    }
+
+
+    @Test
+    void deleteUserTest() throws Exception {
+        final User user = userRepository.findAll().stream()
+                //.filter(p -> p.getId().equals(2L))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("User not found"));
+        final Long userId = user.getId();
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/user/{id}", userId)
+                        .header("Authorization", token))
+                .andExpect(status().is2xxSuccessful());
+
     }
 }
