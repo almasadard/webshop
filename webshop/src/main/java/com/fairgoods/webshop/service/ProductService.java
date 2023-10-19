@@ -25,7 +25,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final Path uploadDirectory = Paths.get("/Users/ramoni/Desktop/webshop/webshop/src/main/java/com/fairgoods/webshop/images");
+    private final Path uploadDirectory = Paths.get("/Users/almas/OneDrive/Desktop/webshop/webshop/src/main/java/com/fairgoods/webshop/images");
 
 
 
@@ -43,7 +43,7 @@ public class ProductService {
         return toDTO(findProductById.get());
     }
 
-    public ProductDTO save (ProductDTO productDTO, MultipartFile file){
+    /*public ProductDTO save (ProductDTO productDTO, MultipartFile file){
 
         if (!Files.exists(uploadDirectory)) {
             try {
@@ -65,6 +65,11 @@ public class ProductService {
         product.setImageUrl(fileName);
         product = productRepository.save(product);
         return toDTO(product);
+    }
+    */
+
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 
     public ProductDTO update (ProductDTO updatedProductDTO){
