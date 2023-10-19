@@ -5,7 +5,6 @@ import com.fairgoods.webshop.dto.UserDTO;
 import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.repository.UserRepository;
 import com.fairgoods.webshop.service.UserService;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -30,9 +28,6 @@ public class UserServiceTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setup() {
@@ -174,61 +169,5 @@ public class UserServiceTest {
         Optional<User> userOptionalAfterDelete = userRepository.findById(savedUser.getId());
         assertFalse(userOptionalAfterDelete.isPresent());
     }
-
-/*
-    @Test
-    void updateTest() {
-        UserDTO updateUserDTO = new UserDTO();
-        updateUserDTO.setId(3L);
-        updateUserDTO.setTitle("Mr");
-        updateUserDTO.setFirstname("UpdatedUser1");
-        updateUserDTO.setLastname("UpdatedUserL1");
-        updateUserDTO.setStreetname("UpdatedStreet");
-        updateUserDTO.setPostcode("Updated1234");
-        updateUserDTO.setEmail("updateduser1@test.com");
-        updateUserDTO.setPassword("*updatedgeheim1");
-
-        // Aktualisieren des Benutzers und Überprüfen, ob keine Ausnahme ausgelöst wird
-        UserDTO updatedUserDTO = assertDoesNotThrow(() -> userService.update(updateUserDTO));
-        assertNotNull(updatedUserDTO);
-
-        // Überprüfen des aktualisierten Benutzers auf Konsistenz
-        assertEquals("Mr", updatedUserDTO.getTitle());
-        assertEquals("UpdatedUser1", updatedUserDTO.getFirstname());
-        assertEquals("UpdatedUserL1", updatedUserDTO.getLastname());
-        assertEquals("UpdatedStreet", updatedUserDTO.getStreetname());
-        assertEquals("Updated1234", updatedUserDTO.getPostcode());
-        assertEquals("updateduser1@test.com", updatedUserDTO.getEmail());
-        // Hier könnte auch die Überprüfung des verschlüsselten Passworts erfolgen
-
-        // Überprüfen, ob der Benutzer korrekt in der Datenbank aktualisiert wurde
-        Optional<User> userOptional = userRepository.findById(3L);
-        assertTrue(userOptional.isPresent());
-
-        User updatedUser = userOptional.get();
-        assertEquals("Mr", updatedUser.getTitle());
-        assertEquals("UpdatedUser1", updatedUser.getFirstname());
-        assertEquals("UpdatedUserL1", updatedUser.getLastname());
-        assertEquals("UpdatedStreet", updatedUser.getStreetname());
-        assertEquals("Updated1234", updatedUser.getPostcode());
-        assertEquals("updateduser1@test.com", updatedUser.getEmail());
-    }
-
-
-    @Test
-    void deleteByIdTest() {
-        Long userIdToDelete = 1L;
-
-        // Überprüfen, ob der Benutzer vor dem Löschen existiert
-        Optional<User> userOptionalBeforeDelete = userRepository.findById(userIdToDelete);
-        assertTrue(userOptionalBeforeDelete.isPresent());
-
-        // Löschen des Benutzers und Überprüfen, ob keine Ausnahme ausgelöst wird
-        assertDoesNotThrow(() -> userService.deleteById(userIdToDelete));
-
-        // Überprüfen, ob der Benutzer nach dem Löschen nicht mehr existiert
-        Optional<User> userOptionalAfterDelete = userRepository.findById(userIdToDelete);
-        assertFalse(userOptionalAfterDelete.isPresent());
-    }*/
 
 }

@@ -1,6 +1,5 @@
 package com.fairgoods.webshop.controllerTest;
 
-
 import com.fairgoods.webshop.WebshopApplication;
 import com.fairgoods.webshop.controller.AuthenticationController;
 import com.fairgoods.webshop.dto.LoginDTO;
@@ -70,7 +69,7 @@ public class AuthenticationControllerTest {
         final String password = "*geheim1";
         final LoginDTO credentials = new LoginDTO(email, password);
 
-        // Abgleich v. email,password von user1 aus setup
+        // Abgleich von email,password von user1 aus setup
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/login")
