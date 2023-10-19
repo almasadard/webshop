@@ -47,10 +47,6 @@ public class User {
     @Column(name="password")
     private String password;
 
-    public User(long l, String john) {
-    }
-
-
     //Password BCrypt Handling
     public void setPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
