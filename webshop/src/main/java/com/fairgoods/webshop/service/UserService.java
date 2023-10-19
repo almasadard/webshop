@@ -73,7 +73,7 @@ public class UserService {
         userDTO.setPostcode(user.getPostcode());
         userDTO.setCity(user.getCity());
         userDTO.setEmail(user.getEmail());
-        userDTO.setPassword(null);
+        userDTO.setPassword("");
         userDTO.setAdmin(user.isAdmin());
         return userDTO;
     }
