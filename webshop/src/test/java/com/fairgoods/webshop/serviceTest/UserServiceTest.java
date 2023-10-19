@@ -1,14 +1,19 @@
 package com.fairgoods.webshop.serviceTest;
 
 import com.fairgoods.webshop.WebshopApplication;
+import com.fairgoods.webshop.dto.UserDTO;
 import com.fairgoods.webshop.model.User;
 import com.fairgoods.webshop.repository.UserRepository;
 import com.fairgoods.webshop.service.UserService;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
@@ -17,6 +22,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = WebshopApplication.class)
+@Import(BCryptPasswordEncoder.class)
 @ActiveProfiles("test")
 public class UserServiceTest {
 
@@ -24,6 +30,9 @@ public class UserServiceTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     void setup() {
@@ -73,4 +82,153 @@ public class UserServiceTest {
         assertNotNull(user);
         assertEquals("user1@test.com", user.getEmail());
     }
+
+
+    @Test
+    void saveTest() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(4L);
+        userDTO.setFirstname("User4");
+        userDTO.setLastname("UserL4");
+        userDTO.setEmail("user4@test.com");
+        userDTO.setPassword("");
+
+        // Speichern des Benutzers und Überprüfung, ob keine Ausnahme ausgelöst wird
+        UserDTO savedUserDTO = assertDoesNotThrow(() -> userService.save(userDTO));
+        assertNotNull(savedUserDTO);
+
+        // Überprüfen des gespeicherten Benutzers auf Konsistenz
+        assertNotNull(savedUserDTO.getId());
+        assertEquals("User4", savedUserDTO.getFirstname());
+        assertEquals("UserL4", savedUserDTO.getLastname());
+        assertEquals("user4@test.com", savedUserDTO.getEmail());
+
+        // Konvertieren des DTOs zur Entität und Überprüfen, ob keine Ausnahme ausgelöst wird
+        User savedUser = assertDoesNotThrow(() -> userService.toEntity(savedUserDTO));
+
+        // Überprüfen der gespeicherten Entität auf Konsistenz
+        assertNotNull(savedUser);
+        assertEquals("User4", savedUser.getFirstname());
+        assertEquals("UserL4", savedUser.getLastname());
+        assertEquals("user4@test.com", savedUser.getEmail());
+    }
+
+    @Test
+    void updateTest() {
+        // Benutzer erstellen
+        User userToUpdate = new User();
+        userToUpdate.setFirstname("Agata");
+        userToUpdate.setLastname("Christie");
+        userToUpdate.setEmail("agata@test.com");
+        userToUpdate.setPassword("*toupdate");
+
+        // Benutzer speichern
+        User savedUser = userRepository.save(userToUpdate);
+
+        // Daten zum Aktualisieren vorbereiten
+        UserDTO updateUserDTO = new UserDTO();
+        updateUserDTO.setId(savedUser.getId());
+        updateUserDTO.setFirstname("Agatha");
+        updateUserDTO.setLastname("Christie");
+        updateUserDTO.setEmail("agatha@test.com");
+        updateUserDTO.setPassword("*updated");
+
+        // Benutzer aktualisieren
+        UserDTO updatedUserDTO = userService.update(updateUserDTO);
+
+        // Überprüfen, ob die Aktualisierung erfolgreich war
+        assertNotNull(updatedUserDTO);
+        assertEquals("Agatha", updatedUserDTO.getFirstname());
+        assertEquals("Christie", updatedUserDTO.getLastname());
+        assertEquals("agatha@test.com", updatedUserDTO.getEmail());
+
+        // Überprüfen, ob die Aktualisierung in der Datenbank gespeichert wurde
+        Optional<User> userOptional = userRepository.findById(savedUser.getId());
+        assertTrue(userOptional.isPresent());
+
+        User updatedUser = userOptional.get();
+        assertEquals("Agatha", updatedUser.getFirstname());
+        assertEquals("Christie", updatedUser.getLastname());
+        assertEquals("agatha@test.com", updatedUser.getEmail());
+    }
+
+
+    @Test
+    void deleteByIdTest() {
+        User userToDelete = new User();
+        userToDelete.setFirstname("Elisabeth");
+        userToDelete.setLastname("Queen");
+        userToDelete.setEmail("lizzie@test.com");
+        userToDelete.setPassword("*todelete");
+
+        User savedUser = userRepository.save(userToDelete);
+
+        // Überprüfen, ob der Benutzer vor dem Löschen existiert
+        Optional<User> userOptionalBeforeDelete = userRepository.findById(savedUser.getId());
+        assertTrue(userOptionalBeforeDelete.isPresent());
+
+        // Löschen des Benutzers und Überprüfen, ob keine Ausnahme ausgelöst wird
+        assertDoesNotThrow(() -> userService.deleteById(savedUser.getId()));
+
+        // Überprüfen, ob der Benutzer nach dem Löschen nicht mehr existiert
+        Optional<User> userOptionalAfterDelete = userRepository.findById(savedUser.getId());
+        assertFalse(userOptionalAfterDelete.isPresent());
+    }
+
+/*
+    @Test
+    void updateTest() {
+        UserDTO updateUserDTO = new UserDTO();
+        updateUserDTO.setId(3L);
+        updateUserDTO.setTitle("Mr");
+        updateUserDTO.setFirstname("UpdatedUser1");
+        updateUserDTO.setLastname("UpdatedUserL1");
+        updateUserDTO.setStreetname("UpdatedStreet");
+        updateUserDTO.setPostcode("Updated1234");
+        updateUserDTO.setEmail("updateduser1@test.com");
+        updateUserDTO.setPassword("*updatedgeheim1");
+
+        // Aktualisieren des Benutzers und Überprüfen, ob keine Ausnahme ausgelöst wird
+        UserDTO updatedUserDTO = assertDoesNotThrow(() -> userService.update(updateUserDTO));
+        assertNotNull(updatedUserDTO);
+
+        // Überprüfen des aktualisierten Benutzers auf Konsistenz
+        assertEquals("Mr", updatedUserDTO.getTitle());
+        assertEquals("UpdatedUser1", updatedUserDTO.getFirstname());
+        assertEquals("UpdatedUserL1", updatedUserDTO.getLastname());
+        assertEquals("UpdatedStreet", updatedUserDTO.getStreetname());
+        assertEquals("Updated1234", updatedUserDTO.getPostcode());
+        assertEquals("updateduser1@test.com", updatedUserDTO.getEmail());
+        // Hier könnte auch die Überprüfung des verschlüsselten Passworts erfolgen
+
+        // Überprüfen, ob der Benutzer korrekt in der Datenbank aktualisiert wurde
+        Optional<User> userOptional = userRepository.findById(3L);
+        assertTrue(userOptional.isPresent());
+
+        User updatedUser = userOptional.get();
+        assertEquals("Mr", updatedUser.getTitle());
+        assertEquals("UpdatedUser1", updatedUser.getFirstname());
+        assertEquals("UpdatedUserL1", updatedUser.getLastname());
+        assertEquals("UpdatedStreet", updatedUser.getStreetname());
+        assertEquals("Updated1234", updatedUser.getPostcode());
+        assertEquals("updateduser1@test.com", updatedUser.getEmail());
+    }
+
+
+    @Test
+    void deleteByIdTest() {
+        Long userIdToDelete = 1L;
+
+        // Überprüfen, ob der Benutzer vor dem Löschen existiert
+        Optional<User> userOptionalBeforeDelete = userRepository.findById(userIdToDelete);
+        assertTrue(userOptionalBeforeDelete.isPresent());
+
+        // Löschen des Benutzers und Überprüfen, ob keine Ausnahme ausgelöst wird
+        assertDoesNotThrow(() -> userService.deleteById(userIdToDelete));
+
+        // Überprüfen, ob der Benutzer nach dem Löschen nicht mehr existiert
+        Optional<User> userOptionalAfterDelete = userRepository.findById(userIdToDelete);
+        assertFalse(userOptionalAfterDelete.isPresent());
+    }*/
+
 }

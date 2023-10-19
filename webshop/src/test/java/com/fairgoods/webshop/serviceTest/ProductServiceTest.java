@@ -7,6 +7,7 @@ import com.fairgoods.webshop.model.Product;
 import com.fairgoods.webshop.repository.CategoryRepository;
 import com.fairgoods.webshop.repository.ProductRepository;
 import com.fairgoods.webshop.service.ProductService;
+import org.hibernate.ObjectNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,4 +98,67 @@ public class ProductServiceTest {
                 () -> assertEquals("Category1", productDTO.getCategoryName())
         );
     }
+
+    @Test
+    void updateTest() {
+        // Zuerst ein Produkt holen, um es zu aktualisieren
+        List<ProductDTO> products = assertDoesNotThrow(() -> productService.findAll());
+        ProductDTO productToUpdateDTO = products.stream()
+                .filter(p -> p.getProductname().equals("Product 1"))
+                .findFirst()
+                .get();
+
+        // Änderungen für das Produkt vorbereiten
+        productToUpdateDTO.setProductname("Updated Product 1");
+        productToUpdateDTO.setDescription("This is an Updated Product1");
+        productToUpdateDTO.setPrice(11);
+        productToUpdateDTO.setQuantity(11);
+        productToUpdateDTO.setImageUrl("new_imageurl.jpg");
+
+        // Produkt aktualisieren
+        ProductDTO updatedProductDTO = assertDoesNotThrow(() -> productService.update(productToUpdateDTO));
+
+        // Überprüfen, ob die Aktualisierung erfolgreich war
+        assertNotNull(updatedProductDTO);
+        assertEquals("Updated Product 1", updatedProductDTO.getProductname());
+        assertEquals("This is an Updated Product1", updatedProductDTO.getDescription());
+        assertEquals(11, updatedProductDTO.getPrice());
+        assertEquals(11, updatedProductDTO.getQuantity());
+        assertEquals("new_imageurl.jpg", updatedProductDTO.getImageUrl());
+
+        // Überprüfen, ob die Aktualisierung in der Datenbank gespeichert wurde
+        ProductDTO productDTOFromDb = assertDoesNotThrow(() -> productService.findById(updatedProductDTO.getId()));
+
+        assertNotNull(productDTOFromDb);
+        assertEquals("Updated Product 1", productDTOFromDb.getProductname());
+        assertEquals("This is an Updated Product1", productDTOFromDb.getDescription());
+        assertEquals(11, productDTOFromDb.getPrice());
+        assertEquals(11, productDTOFromDb.getQuantity());
+        assertEquals("new_imageurl.jpg", productDTOFromDb.getImageUrl());
+    }
+
+    @Test
+    void deleteByIdTest() {
+        // Zuerst ein Produkt holen, um es zu löschen
+        List<ProductDTO> products = assertDoesNotThrow(() -> productService.findAll());
+        ProductDTO productToDeleteDTO = products.stream()
+                .filter(p -> p.getProductname().equals("Product 1"))
+                .findFirst()
+                .get();
+
+        Long productIdToDelete = productToDeleteDTO.getId();
+
+        // Überprüfen, ob das Produkt vor dem Löschen existiert
+        ProductDTO productBeforeDelete = assertDoesNotThrow(() -> productService.findById(productIdToDelete));
+        assertNotNull(productBeforeDelete);
+
+        // Löschen des Produkts und Überprüfen, ob keine Ausnahme ausgelöst wird
+        assertDoesNotThrow(() -> productService.deleteById(productIdToDelete));
+
+        // Überprüfen, ob das Produkt nach dem Löschen nicht mehr existiert
+        Exception exception = assertThrows(ObjectNotFoundException.class, () -> productService.findById(productIdToDelete));
+        assertNotNull(exception);
+    }
+
+
 }
