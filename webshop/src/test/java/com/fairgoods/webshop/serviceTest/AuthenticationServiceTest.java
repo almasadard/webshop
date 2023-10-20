@@ -51,7 +51,7 @@ public class AuthenticationServiceTest {
 
         // Passwort falsch
         String response = authenticationService.login("test@test.com", "wrongpassword", false);
-        assertEquals("Falsches Passwort", response);
+        assertEquals("Wrong password", response);
 
     }
 }
