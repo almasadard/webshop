@@ -14,8 +14,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import com.fairgoods.webshop.security.AuthenticationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
+/**
+ * Configures web security settings for the application.
+ *
+ */
 
 @Configuration
 @EnableWebSecurity
@@ -25,11 +28,23 @@ public class SecurityConfig {
 
     private final TokenService tokenService;
 
-
+    /**
+     * Provides a password encoder bean.
+     *
+     * @return PasswordEncoder object to be used in the application.
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    /**
+     * Configures security filter chain.
+     *
+     * @param httpSecurity to modify.
+     * @return SecurityFilterChain object that has been modified.
+     * @throws Exception in case of any errors.
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()

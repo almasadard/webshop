@@ -17,6 +17,12 @@ import java.util.UUID;
 public class LocalFileService implements FileService {
     private final Path uploadDirectory = Paths.get("webshop/webshop/src/main/java/com/fairgoods/webshop/images");
 
+    /**
+     * Uploads a file to the predefined directory and returns a file entity.
+     *
+     * @param file MultipartFile object representing the file to be uploaded.
+     * @return A File object containing metadata such as the file’s name.
+     */
     @Override
     public File upload(MultipartFile file) {
         if (!Files.exists(uploadDirectory)) {
@@ -41,6 +47,12 @@ public class LocalFileService implements FileService {
 
     }
 
+    /**
+     * Retrieves a file stored in the predefined directory based on its reference (filename).
+     *
+     * @param reference String representing the filename.
+     * @return A Resource object representing the retrieved file.
+     */
     @Override
     public Resource get(String reference) {
         try {
@@ -57,6 +69,12 @@ public class LocalFileService implements FileService {
         }
     }
 
+    /**
+     * Deletes a file from the predefined directory based on its reference (filename).
+     *
+     * @param reference String representing the filename to be deleted.
+     * @return boolean value indicating the success or failure of the deletion operation.
+     */
     @Override
     public boolean delete(String reference) {
         try {
@@ -74,6 +92,14 @@ public class LocalFileService implements FileService {
         }
     }
 
+    /**
+     * Updates an existing file in the predefined directory. Deletes the existing file and
+     * stores the new file in its place.
+     *
+     * @param reference String representing the filename of the file to be updated.
+     * @param file MultipartFile object representing the new file.
+     * @return boolean value indicating the success or failure of the update operation.
+     */
     @Override
     public boolean update(String reference, MultipartFile file) {
         try {

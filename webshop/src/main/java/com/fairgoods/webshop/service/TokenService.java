@@ -21,7 +21,13 @@ public class TokenService {
     private String secretkey;
     private static final int EXPIRES_IN = 3600000;
 
-
+    /**
+     * Generates a JWT token for a user. The token contains claims like user ID, email, and admin status.
+     * The token is signed with HMAC using SHA-256 hash algorithm.
+     *
+     * @param user The user for whom the token is generated.
+     * @return A JWT token string.
+     */
     public String generateToken(User user) {
         Date expirationDate = new Date(System.currentTimeMillis() + EXPIRES_IN);
         Key key = Keys.hmacShaKeyFor(secretkey.getBytes());
@@ -35,6 +41,13 @@ public class TokenService {
                 .compact();
     }
 
+    /**
+     * Parses a JWT token to extract the user principal information such as user ID, email, and admin status.
+     * It verifies the token signature and checks for token expiration and format.
+     *
+     * @param jwt The JWT token string to parse.
+     * @return An Optional containing a UserPrincipal if the token is valid, or an empty Optional if the token is invalid or expired.
+     */
     public Optional<UserPrincipal> parseToken(String jwt) {
         Jws<Claims> jwsClaims;
 

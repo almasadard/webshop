@@ -17,12 +17,27 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+/**
+ * A filter that intercepts HTTP requests to perform authentication based on JWT tokens.
+ * It extracts the JWT token from the Authorization header, validates it, and sets the
+ * authentication object in the SecurityContext.
+ *
+ */
 @AllArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
 
-
+    /**
+     * Processes an incoming HTTP request by extracting the JWT token, performing authentication,
+     * and setting the authenticated user in the security context.
+     *
+     * @param request  The servlet request object containing client request information.
+     * @param response The servlet response object to assist in sending a response to the client.
+     * @param filterChain The filter chain to pass the request along the chain of filters.
+     * @throws ServletException If the processing of the request fails for any other reason.
+     * @throws IOException If an input or output error is detected when the servlet handles the request.
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
@@ -50,6 +65,12 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    /**
+     * Creates an authentication token using the provided JWT.
+     *
+     * @param jwt The JWT string.
+     * @return An Optional containing the authentication token if successful; empty otherwise.
+     */
     private Optional<UsernamePasswordAuthenticationToken> createAuthToken(String jwt) {
         // Parse JWT
         Optional<UserPrincipal> userPrincipal = tokenService.parseToken(jwt);
