@@ -39,12 +39,14 @@ public class SecurityConfig {
                 .and()
                 //Admin
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.DELETE, "/product/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/product/{id}","/files").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/product", "/files").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/product").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/product/update").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/user").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/user/{id}").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT,"/user").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT,"/user/update").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/user/{id}").hasRole("ADMIN")
 
                 .requestMatchers(HttpMethod.GET, "/product").permitAll()

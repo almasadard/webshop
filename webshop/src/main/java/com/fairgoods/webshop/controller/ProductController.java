@@ -59,9 +59,11 @@ public class ProductController {
 
     @PutMapping("/update")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ProductDTO> updateProduct(@Valid @RequestBody ProductDTO productDTO) {
-        return ResponseEntity.ok(productService.update(productDTO));
+    public ResponseEntity<Product> updateProduct(@RequestBody @Valid ProductDTO productDTO) {
+        Product updatedProduct = productService.updateProduct(productDTO);
+        return ResponseEntity.ok(updatedProduct);
     }
+
 
     // Delete Product
 

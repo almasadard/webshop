@@ -25,13 +25,14 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+
+    // Verzeichnis zum Hochladen von Bildern
     private final Path uploadDirectory = Paths.get("/Users/almas/OneDrive/Desktop/webshop/webshop/src/main/java/com/fairgoods/webshop/images");
-
-
 
     public List<ProductDTO> findAll(){
         return productRepository.findAll()
-                .stream().map(this::toDTO)
+                .stream()
+                .map(this::toDTO)
                 .collect(Collectors.toList());
     }
 
@@ -43,47 +44,21 @@ public class ProductService {
         return toDTO(findProductById.get());
     }
 
-    /*public ProductDTO save (ProductDTO productDTO, MultipartFile file){
-
-        if (!Files.exists(uploadDirectory)) {
-            try {
-                Files.createDirectories(uploadDirectory);
-            } catch (IOException e) {
-                throw new RuntimeException("Error creating directory", e);
-            }
-        }
-        String fileName = UUID.randomUUID() + "_" + file.getOriginalFilename();
-        Path uploadPath = uploadDirectory.resolve(fileName);
-
-        try {
-            Files.copy(file.getInputStream(), uploadPath);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        Product product = toEntity(productDTO);
-        product.setImageUrl(fileName);
-        product = productRepository.save(product);
-        return toDTO(product);
-    }
-    */
-
     public Product save(Product product) {
         return productRepository.save(product);
     }
 
-    public ProductDTO update (ProductDTO updatedProductDTO){
+    public Product updateProduct(ProductDTO updatedProductDTO){
         Product product = productRepository.findById(updatedProductDTO.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + updatedProductDTO.getId() + " not found"));
 
-        product.setId(updatedProductDTO.getId());
         product.setDescription(updatedProductDTO.getDescription());
         product.setProductname(updatedProductDTO.getProductname());
         product.setPrice(updatedProductDTO.getPrice());
         product.setImageUrl(updatedProductDTO.getImageUrl());
         product.setQuantity(updatedProductDTO.getQuantity());
 
-        return toDTO(productRepository.save(product));
+        return productRepository.save(product);
     }
 
     public void deleteById (Long id){
@@ -91,7 +66,6 @@ public class ProductService {
                 .orElseThrow(() -> new EntityNotFoundException("Product with id " + id + " not found"));
         productRepository.delete(product);
     }
-
 
     public ProductDTO toDTO(Product product) {
         return new ProductDTO(product.getId(), product.getProductname(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getImageUrl(), product.getCategory().getName());
@@ -104,5 +78,4 @@ public class ProductService {
         }
         return new Product(productDTO.getId(), productDTO.getProductname(), productDTO.getDescription(), productDTO.getPrice(), productDTO.getQuantity(), productDTO.getImageUrl(), category);
     }
-
 }

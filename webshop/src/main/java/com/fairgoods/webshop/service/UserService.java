@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,27 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    public UserDTO update(UserDTO updateUserDTO) {
+        User user = userRepository.findById(updateUserDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + updateUserDTO.getId()));
 
+        user.setTitle(updateUserDTO.getTitle());
+        user.setFirstname(updateUserDTO.getFirstname());
+        user.setLastname(updateUserDTO.getLastname());
+        user.setStreetname(updateUserDTO.getStreetname());
+        user.setPostcode(updateUserDTO.getPostcode());
+        user.setEmail(updateUserDTO.getEmail());
+
+        // Überprüfen, ob ein neues Passwort im DTO vorhanden ist und es aktualisieren
+        if (updateUserDTO.getPassword() != null && !updateUserDTO.getPassword().isEmpty()) {
+            user.setPassword(updateUserDTO.getPassword());
+        }
+
+        // Aktualisieren des Benutzers in der Datenbank
+        User updatedUser = userRepository.save(user);
+
+        return toDTO(updatedUser);
+    }
     public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
     }
@@ -38,21 +59,7 @@ public class UserService {
         return toDTO(user);
     }
 
-    public UserDTO update(UserDTO updateUserDTO){
-        User user = userRepository.findById(updateUserDTO.getId())
-                        .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + updateUserDTO.getId()));
 
-        user.setTitle(updateUserDTO.getTitle());
-        user.setFirstname(updateUserDTO.getFirstname());
-        user.setLastname(updateUserDTO.getLastname());
-        user.setStreetname(updateUserDTO.getStreetname());
-        user.setPostcode(updateUserDTO.getPostcode());
-        user.setEmail(updateUserDTO.getEmail());
-        user.setPassword(updateUserDTO.getPassword());
-
-        return toDTO(userRepository.save(user));
-
-    }
 
     public void deleteById(Long id){
         User user = userRepository.findById(id)
