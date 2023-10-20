@@ -1,5 +1,6 @@
 package com.fairgoods.webshop.service;
 
+import com.fairgoods.webshop.model.File;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,10 @@ import java.util.UUID;
 
 @Service
 public class LocalFileService implements FileService {
-    private final Path uploadDirectory = Paths.get("/Users/ramoni/Desktop/webshop/webshop/src/main/java/com/fairgoods/webshop/images");
+    private final Path uploadDirectory = Paths.get("webshop/webshop/src/main/java/com/fairgoods/webshop/images");
 
     @Override
-    public String upload(MultipartFile file) {
+    public File upload(MultipartFile file) {
         if (!Files.exists(uploadDirectory)) {
             try {
                 Files.createDirectories(uploadDirectory);
@@ -33,7 +34,10 @@ public class LocalFileService implements FileService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return fileName;
+
+        File fileEntity = new File();
+        fileEntity.setFileName(fileName);
+        return fileEntity;
 
     }
 

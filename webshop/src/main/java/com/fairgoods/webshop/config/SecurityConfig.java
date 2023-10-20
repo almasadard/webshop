@@ -40,7 +40,7 @@ public class SecurityConfig {
                 //Admin
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.DELETE, "/product/{id}").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/product", "/files").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/product").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/user").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/user/{id}").hasRole("ADMIN")

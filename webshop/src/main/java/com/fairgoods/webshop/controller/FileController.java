@@ -1,12 +1,16 @@
 package com.fairgoods.webshop.controller;
 
 import com.fairgoods.webshop.dto.FileUploadResponse;
+import com.fairgoods.webshop.model.File;
+import com.fairgoods.webshop.repository.FileRepository;
 import com.fairgoods.webshop.service.FileService;
+import io.jsonwebtoken.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,16 +20,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileController {
 
     private final FileService fileService;
+    private final FileRepository fileRepository;
 
     @PostMapping
-    public @ResponseBody FileUploadResponse upload(
-            @RequestParam("file") MultipartFile file
-    ) {
-        String reference = fileService.upload(file);
+    @PreAuthorize("hasRole('ADMIN')")
+    public String fileUpload(@RequestParam("file")MultipartFile file) throws IOException {
+        File fileEntity = fileService.upload(file);
+        fileRepository.save(fileEntity);
 
-        return new FileUploadResponse(
-                true, reference
-        );
+        return fileEntity.getId().toString();
     }
 
 
