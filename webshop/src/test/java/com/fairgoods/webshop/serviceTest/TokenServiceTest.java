@@ -25,6 +25,7 @@ public class TokenServiceTest {
 
     @BeforeEach
     void setup() {
+        // Erstellt einen Fake User, der für die Tests verwendet wird
         testUser = new User();
         testUser.setId(1L);
         testUser.setFirstname("Test");
