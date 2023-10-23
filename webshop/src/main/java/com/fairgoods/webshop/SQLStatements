@@ -1,13 +1,34 @@
 //Kaffee
 
-INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`,`category_id`) VALUES ('1', 'Der klassische Kaffee mit feinsten Bohnen.', '6', 'Origin', '4','1'), ('2', 'Der außergewöhnliche Kaffee mit feinsten Bohnen.', '10', 'Selection', '3','1'),('3', 'Der entkoffeinierte Kaffee mit feinsten Bohnen.', '6', 'Without', '4','1'), ('4', 'Der luxuriöse Kaffee mit feinsten Bohnen.', '10', 'Luxus', '3', '1');
+INSERT INTO `product` (`id`, `description`, `image_url`, `price`, `productname`, `quantity`, `category_id`) VALUES
+(1, 'Der klassische Kaffee mit feinsten Bohnen.', '1', 1, 'Origin', 1, 1),
+(2, 'Der außergewöhnliche Kaffee mit feinsten Bohnen.', '2', 2, 'Selection', 2, 1),
+(3, 'Der entkoffeinierte Kaffee mit feinsten Bohnen.', '3', 13, 'Without', 3, 1),
+(4, 'Der luxuriöse Kaffee mit feinsten Bohnen.', '4', 14, 'Luxus', 4, 1),
 
 //Tee
-INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`, `category_id`) VALUES ('5', 'Feinster schwarzer Teegenuss', '6', 'Black', '4','2'), ('6', 'Feinster natürlicher grüner Teegenuss', '10', 'Green', '3','2'),('7', 'Feinster natürlicher herbal Teegenuss', '6', 'Relax', '4','2'), ('8', 'Feinster vitamin Teegenuss', '10', 'Fit', '3', '2');
+INSERT INTO `product` (`id`, `description`, `image_url`, `price`, `productname`, `quantity`, `category_id`) VALUES
+(5, 'Feinster schwarzer Teegenuss', '5', 15, 'Black', 5, 2),
+(6, 'Feinster natürlicher grüner Teegenuss', '6', 6, 'Green', 6, 2),
+(7, 'Feinster natürlicher herbal Teegenuss', '7', 177, 'Relax', 7, 2),
+(8, 'Feinster natürlicher vitamin Teegenuss', '8', 8, 'Fit', 18, 2),
 
 //Kräuter
-INSERT INTO `product` (`id`, `description`, `price`, `productname`, `quantity`, `category_id`) VALUES ('9', 'Ausgewählte, feinste Kräuter', '6', 'Yellow', '4','3'), ('10', 'Ausgewählte, feinste Kräuter', '10', 'Red', '3','3'),('11', 'Ausgewählte, feinste Kräuter', '6', 'Green', '4','3'), ('12', 'Ausgewählte, feinste Kräuter', '10', 'Black', '3', '3');
+INSERT INTO `product` (`id`, `description`, `image_url`, `price`, `productname`, `quantity`, `category_id`) VALUES
+(9, 'Ausgewählte, feinste Kurkuma', '9', 9, 'Yellow', 9, 3),
+(10, 'Ausgewählte, feinste Chilliflocken', '10', 10, 'Red', 1, 3),
+(11, 'Ausgewählter, feinster Basilikum', '11', 11, 'Green', 1, 3),
+(12, 'Ausgewählter, feinster Pfeffer', '12', 12, 'Black', 2, 3);
 
 //User
 
-INSERT INTO `user` (`id`, `admin`, `city`, `email`, `firstname`, `lastname`, `password`, `postcode`, `streetname`, `title`) VALUES ('3', b'0', 'Wien', 'userdaddy@mail.com', 'Dietmar', 'Daddy', '*geheim1', '1100', 'Daddystreet 1', 'Mann');
+INSERT INTO `user` (`id`, `admin`, `city`, `email`, `firstname`, `lastname`, `password`, `postcode`, `streetname`, `title`) VALUES
+(1, b'1', 'Wien', 'admin@admin.com', 'Admin', 'Admin', '$2a$10$oKcnGDupXulWH9AWKljIW.a1BpAbQAEL8bU5qO/TLSD2WGJvHm4Ku', '1230', 'Adminstraße 1', NULL),
+(2, b'0', 'Wien', 'noadmin@admin.com', 'Noadmin', 'Noadmino', '$2a$10$pAejWypshFCFyZYrTESDsOERHhfsP/hnQ5jdADWZoTj2BuCJLS7t2', '1230', 'NAdminstraße 1', NULL);
+
+//Kategorie
+
+INSERT INTO `category` (`id`, `name`) VALUES
+(1, 'Kaffee'),
+(2, 'Tee'),
+(3, 'Kräuter');
